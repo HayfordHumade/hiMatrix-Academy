@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hiMatrix Academy — Learn 3D Product Design with Onshape</title>
+  <meta name="description" content="Master modern 3D product design with Onshape through practical, project-based learning at hiMatrix Academy. Build real products and a professional portfolio." />
+  <meta name="theme-color" content="#1E40AF" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="hiMatrix Academy — Learn 3D Product Design with Onshape" />
+  <meta property="og:description" content="Practical, project-based 3D product design training using Onshape. Build real products. Develop a portfolio." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E40AF'/%3E%3Cpath d='M25 70V30h10l15 20 15-20h10v40H65V48L50 68 35 48v22z' fill='%23fff'/%3E%3C/svg%3E" />
+  <!-- Tailwind via CDN (per spec) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#1E40AF',
+              'blue-dark': '#1E3A8A',
+              orange: '#F97316',
+              'orange-dark': '#EA580C',
+              slate: '#0F172A',
+              gray: '#F8FAFC',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 4px 20px -4px rgba(15, 23, 42, 0.08)',
+            lift: '0 12px 32px -8px rgba(15, 23, 42, 0.15)',
+          },
+        },
+      },
+    };
+  </script>
+  <!-- Preconnect Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    /* Blueprint / CAD grid background */
+    .cad-grid {
+      background-image:
+        linear-gradient(rgba(30, 64, 175, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 64, 175, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .cad-grid-fine {
+      background-image:
+        linear-gradient(rgba(30, 64, 175, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 64, 175, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    /* Card lift */
+    .card {
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.15);
+      border-color: #1E40AF;
+    }
+    /* Button lift */
+    .btn {
+      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    /* Focus ring */
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid #F97316;
+      outline-offset: 3px;
+      border-radius: 8px;
+    }
+    /* FAQ chevron */
+    details[open] .faq-chevron { transform: rotate(180deg); }
+    .faq-chevron { transition: transform .2s ease; }
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "hiMatrix Academy",
+    "description": "Academy teaching 3D Product Design with Onshape through practical, project-based learning.",
+    "url": "https://himatrix.example.com"
+  }
+  </script>
+</head>
+<body class="bg-white text-brand-slate antialiased">
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:bg-brand-blue focus:text-white focus:px-4 focus:py-2 focus:rounded-lg z-50">Skip to content</a>
+  <!-- Navigation -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-100">
+    <nav class="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between" aria-label="Main">
+      <a href="#" class="flex items-center gap-2 font-bold text-lg">
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 549.53 650.71">
+                <defs>
+                  <style>
+                    .cls-1 {
+                      fill: #1E40AF;
+                    }
+                  </style>
+                </defs>
+                <path class="cls-1" d="M439.49,389.24v261.47l110.04-63.76V158.65c0-8.05-1.08-15.84-3.1-23.24-9.34-34.24-38.82-60.16-74.93-64.25h-252.2v153.73c.02.7.06,1.39.1,2.08.04.63.09,1.25.16,1.87,2.8,27.86,26.83,48.78,54.83,48.78h66.41c52.03,3.14,92.7,38.09,98.7,87.25M329.32,178.62v-43.21h69.31c21.12,5.77,37.77,23.69,40.87,45.79h0v45.78h-109.06"/>
+                <path class="cls-1" d="M285.77,377.18l-66.37-.03v93.72h-64.18c-21.65,0-39.26-17.61-39.26-39.27V0L2.24,65.9l-1.84,1.07v420.62c-.27,2.85-.41,5.73-.41,8.58s.14,5.83.42,8.72c4.12,43.18,38.45,77.47,81.63,81.54h252.9s0-152.09,0-152.09c0-13.93-5.03-27.39-14.15-37.89-9.04-10.4-21.48-17.24-35.03-19.26Z"/>
+              </svg>
+        </span>
+        <span><span class="text-brand-blue">hi</span><span class="text-brand-black">Matrix Academy</span></span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+        <li><a href="#why" class="hover:text-brand-blue">Why</a></li>
+        <li><a href="#course" class="hover:text-brand-blue">Course</a></li>
+        <li><a href="#benefits" class="hover:text-brand-blue">Benefits</a></li>
+        <li><a href="#faq" class="hover:text-brand-blue">FAQ</a></li>
+      </ul>
+      <a href="https://forms.gle/Q8jmgUMD4sH7TuWA8" target="_blank" rel="noopener"
+         class="btn hidden sm:inline-flex items-center gap-2 bg-brand-blue text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-orange shadow-soft">
+        Register Interest
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </nav>
+  </header>
+  <main id="main">
+    <!-- HERO -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 cad-grid pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-brand-orange/5 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="relative max-w-6xl mx-auto px-5 md:px-8 pt-16 md:pt-24 pb-20 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+            Enrolment opening soon
+          </span>
+          <h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight text-brand-slate">
+            Learn 3D Product Design That Gets You <span class="text-brand-blue">Industry Ready</span>.
+          </h1>
+          <p class="mt-6 text-lg text-slate-600 max-w-xl leading-relaxed">
+            Master modern product design using <strong class="text-brand-slate">Onshape</strong> through practical, project-based learning. Build real products, develop a professional portfolio, and gain skills used by engineers and product designers.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="https://forms.gle/Q8jmgUMD4sH7TuWA8" target="_blank" rel="noopener"
+               class="btn inline-flex items-center gap-2 bg-brand-blue text-white px-6 py-3.5 rounded-xl font-semibold shadow-soft hover:bg-brand-orange hover:shadow-lift">
+              Register Your Interest
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#course" class="btn inline-flex items-center gap-2 border border-slate-200 text-brand-slate px-6 py-3.5 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue">
+              Learn More
+            </a>
+          </div>
+          <dl class="mt-10 grid grid-cols-3 gap-6 max-w-md">
+            <div><dt class="text-xs text-slate-500 uppercase tracking-wider">Projects</dt><dd class="mt-1 text-2xl font-bold text-brand-slate">200+</dd></div>
+            <div><dt class="text-xs text-slate-500 uppercase tracking-wider">Software</dt><dd class="mt-1 text-2xl font-bold text-brand-slate">Onshape</dd></div>
+            <div><dt class="text-xs text-slate-500 uppercase tracking-wider">Format</dt><dd class="mt-1 text-2xl font-bold text-brand-slate">Online</dd></div>
+          </dl>
+        </div>
+        <!-- Hero SVG illustration: abstract CAD part -->
+        <div class="reveal relative" aria-hidden="true">
+          <div class="relative aspect-square max-w-lg mx-auto">
+            <svg viewBox="0 0 400 400" class="w-full h-full drop-shadow-[0_20px_40px_rgba(30,64,175,0.15)]">
+              <defs>
+                <linearGradient id="face1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#1E40AF"/><stop offset="1" stop-color="#1E3A8A"/>
+                </linearGradient>
+                <linearGradient id="face2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1E40AF"/>
+                </linearGradient>
+                <linearGradient id="face3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#3B82F6"/>
+                </linearGradient>
+              </defs>
+              <!-- Blueprint measurement lines -->
+              <g stroke="#1E40AF" stroke-width="1" opacity=".25" fill="none">
+                <line x1="40" y1="60" x2="360" y2="60" stroke-dasharray="4 6"/>
+                <line x1="40" y1="340" x2="360" y2="340" stroke-dasharray="4 6"/>
+                <line x1="40" y1="60" x2="40" y2="70"/>
+                <line x1="360" y1="60" x2="360" y2="70"/>
+                <line x1="40" y1="330" x2="40" y2="340"/>
+                <line x1="360" y1="330" x2="360" y2="340"/>
+              </g>
+              <text x="200" y="52" text-anchor="middle" font-size="10" fill="#1E40AF" opacity=".6" font-family="Inter">320.00</text>
+              <!-- Isometric 3D block -->
+              <g transform="translate(200 210)">
+                <!-- top face -->
+                <polygon points="0,-100 110,-40 0,20 -110,-40" fill="url(#face3)"/>
+                <!-- left face -->
+                <polygon points="-110,-40 0,20 0,140 -110,80" fill="url(#face1)"/>
+                <!-- right face -->
+                <polygon points="110,-40 0,20 0,140 110,80" fill="url(#face2)"/>
+                <!-- hole on top -->
+                <ellipse cx="0" cy="-40" rx="34" ry="18" fill="#0F172A" opacity=".85"/>
+                <ellipse cx="0" cy="-42" rx="34" ry="18" fill="#1E3A8A"/>
+                <!-- accent line -->
+                <line x1="-110" y1="-40" x2="110" y2="-40" stroke="#F97316" stroke-width="1.5" opacity=".7"/>
+                <line x1="0" y1="20" x2="0" y2="140" stroke="#fff" stroke-width="1" opacity=".3"/>
+              </g>
+              <!-- Orbit rings -->
+              <g fill="none" stroke="#F97316" stroke-width="1.2" opacity=".55">
+                <ellipse cx="200" cy="220" rx="150" ry="55"/>
+              </g>
+              <circle cx="350" cy="220" r="5" fill="#F97316"/>
+              <circle cx="50" cy="220" r="3" fill="#1E40AF"/>
+              <!-- corner markers -->
+              <g stroke="#0F172A" stroke-width="1.5" fill="none">
+                <path d="M20 20 L40 20 M20 20 L20 40"/>
+                <path d="M380 20 L360 20 M380 20 L380 40"/>
+                <path d="M20 380 L40 380 M20 380 L20 360"/>
+                <path d="M380 380 L360 380 M380 380 L380 360"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- WHY / TRUST -->
+    <section id="why" class="bg-brand-gray py-20 md:py-28">
+      <div class="max-w-6xl mx-auto px-5 md:px-8">
+        <div class="max-w-2xl reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">Why hiMatrix</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Why Learn With hiMatrix?</h2>
+          <p class="mt-4 text-slate-600">We teach the way engineers actually work: by building things that solve real problems.</p>
+        </div>
+        <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- 6 trust cards -->
+          <article class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 class="mt-5 font-semibold text-lg">Hands-on Projects</h3>
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">Every module ends in something you can manufacture or 3D Print, present and iterate on.</p>
+          </article>
+          <article class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-6"/></svg>
+            </div>
+            <h3 class="mt-5 font-semibold text-lg">Industry-Relevant Skills</h3>
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">Curriculum aligned with how modern product design teams actually work.</p>
+          </article>
+          <article class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <h3 class="mt-5 font-semibold text-lg">Beginner Friendly</h3>
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">Start from zero - we take you step by step from sketch to solid model.</p>
+          </article>
+          <article class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+            </div>
+            <h3 class="mt-5 font-semibold text-lg">Portfolio Development</h3>
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">Graduate with a portfolio of designs you can show recruiters and clients.</p>
+          </article>
+          <article class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+            </div>
+            <h3 class="mt-5 font-semibold text-lg">Learn Onshape</h3>
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">Modern cloud CAD - no expensive laptop or install required.</p>
+          </article>
+          <article class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3l7 7-11 11H3v-7z"/><path d="M14 3l7 7"/></svg>
+            </div>
+            <h3 class="mt-5 font-semibold text-lg">Practical Engineering Approach</h3>
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">Design with manufacturing, materials and real constraints in mind.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- COURSE OVERVIEW -->
+    <section id="course" class="relative py-20 md:py-28">
+      <div class="absolute inset-0 cad-grid-fine pointer-events-none opacity-60" aria-hidden="true"></div>
+      <div class="relative max-w-6xl mx-auto px-5 md:px-8">
+        <div class="max-w-2xl reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">Course Overview</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">What you'll learn</h2>
+          <p class="mt-4 text-slate-600">A complete path from your first sketch to a market-ready product concept.</p>
+        </div>
+        <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- 8 feature cards -->
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">01</div>
+            <h3 class="mt-3 font-semibold">Learn 3D CAD with Onshape</h3>
+            <p class="mt-2 text-sm text-slate-600">Sketch, extrude, revolve, and build parts in the cloud.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">02</div>
+            <h3 class="mt-3 font-semibold">Product Design Process</h3>
+            <p class="mt-2 text-sm text-slate-600">From brief to prototype using proven workflows.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">03</div>
+            <h3 class="mt-3 font-semibold">Design Thinking</h3>
+            <p class="mt-2 text-sm text-slate-600">Solve real user problems with structured creative methods.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">04</div>
+            <h3 class="mt-3 font-semibold">Engineering Drawings</h3>
+            <p class="mt-2 text-sm text-slate-600">Communicate designs with dimensioned technical drawings.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">05</div>
+            <h3 class="mt-3 font-semibold">Assemblies</h3>
+            <p class="mt-2 text-sm text-slate-600">Combine parts into moving, mated, functional products.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">06</div>
+            <h3 class="mt-3 font-semibold">Design for Manufacturing</h3>
+            <p class="mt-2 text-sm text-slate-600">Design parts that can actually be made - cheaply and well.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">07</div>
+            <h3 class="mt-3 font-semibold">Real-world Projects</h3>
+            <p class="mt-2 text-sm text-slate-600">Work on real-world design projects, not disconnected exercises.</p>
+          </div>
+          <div class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-brand-blue font-bold text-2xl">08</div>
+            <h3 class="mt-3 font-semibold">Portfolio Development</h3>
+            <p class="mt-2 text-sm text-slate-600">Package your work into a portfolio that opens doors.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- WHO IS THIS FOR -->
+    <section class="bg-brand-slate text-white py-20 md:py-28 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-[0.08] pointer-events-none" aria-hidden="true" style="background-image: linear-gradient(rgba(255,255,255,.35) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.35) 1px, transparent 1px); background-size: 40px 40px;"></div>
+      <div class="relative max-w-6xl mx-auto px-5 md:px-8">
+        <div class="max-w-2xl reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">Who It's For</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Who this course is for</h2>
+          <p class="mt-4 text-slate-300">If you make things - or want to - you belong here.</p>
+        </div>
+        <ul class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <li class="reveal rounded-2xl bg-white/5 border border-white/10 px-5 py-6 text-center font-medium hover:bg-white/10 transition">Students</li>
+          <li class="reveal rounded-2xl bg-white/5 border border-white/10 px-5 py-6 text-center font-medium hover:bg-white/10 transition">Engineers</li>
+          <li class="reveal rounded-2xl bg-white/5 border border-white/10 px-5 py-6 text-center font-medium hover:bg-white/10 transition">Designers</li>
+          <li class="reveal rounded-2xl bg-white/5 border border-white/10 px-5 py-6 text-center font-medium hover:bg-white/10 transition">Innovators</li>
+          <li class="reveal rounded-2xl bg-white/5 border border-white/10 px-5 py-6 text-center font-medium hover:bg-white/10 transition">Entrepreneurs</li>
+          <li class="reveal rounded-2xl bg-white/5 border border-white/10 px-5 py-6 text-center font-medium hover:bg-white/10 transition">Creatives</li>
+        </ul>
+      </div>
+    </section>
+    <!-- BENEFITS -->
+    <section id="benefits" class="py-20 md:py-28 bg-brand-gray">
+      <div class="max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-12 items-start">
+        <div class="reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">Outcomes</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">What You'll Gain</h2>
+          <p class="mt-4 text-slate-600 leading-relaxed">The course is designed for outcomes you can point to a portfolio, a certificate, a network, and skills that translate directly into work.</p>
+          <a href="https://forms.gle/Q8jmgUMD4sH7TuWA8" target="_blank" rel="noopener"
+             class="btn mt-8 inline-flex items-center gap-2 bg-brand-blue text-white px-6 py-3.5 rounded-xl font-semibold shadow-soft hover:bg-brand-orange">
+            Register Your Interest
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <ul class="reveal space-y-3">
+          <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100"><span class="mt-0.5 text-brand-orange">✔</span> Industry-ready CAD skills</li>
+          <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100"><span class="mt-0.5 text-brand-orange">✔</span> Real design projects</li>
+          <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100"><span class="mt-0.5 text-brand-orange">✔</span> Professional portfolio</li>
+          <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100"><span class="mt-0.5 text-brand-orange">✔</span> Certificate of completion</li>
+          <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100"><span class="mt-0.5 text-brand-orange">✔</span> Membership in the hiMatrix Design Community</li>
+          <li class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100"><span class="mt-0.5 text-brand-orange">✔</span> Future internship and collaboration opportunities for outstanding students</li>
+        </ul>
+      </div>
+    </section>
+    <!-- COURSE FLOW -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-6xl mx-auto px-5 md:px-8">
+        <div class="max-w-2xl reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">The Journey</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Your learning journey</h2>
+          <p class="mt-4 text-slate-600">Six clear stages - from first idea to finished portfolio.</p>
+        </div>
+        <ol class="mt-12 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <!-- steps -->
+          <li class="reveal relative rounded-2xl border border-slate-100 bg-white p-5 shadow-soft">
+            <div class="text-xs text-slate-400 font-semibold">01</div>
+            <div class="mt-1 font-semibold text-brand-blue">Discover</div>
+            <svg class="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-slate-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </li>
+          <li class="reveal relative rounded-2xl border border-slate-100 bg-white p-5 shadow-soft">
+            <div class="text-xs text-slate-400 font-semibold">02</div>
+            <div class="mt-1 font-semibold text-brand-blue">Design</div>
+            <svg class="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-slate-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </li>
+          <li class="reveal relative rounded-2xl border border-slate-100 bg-white p-5 shadow-soft">
+            <div class="text-xs text-slate-400 font-semibold">03</div>
+            <div class="mt-1 font-semibold text-brand-blue">Model</div>
+            <svg class="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-slate-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </li>
+          <li class="reveal relative rounded-2xl border border-slate-100 bg-white p-5 shadow-soft">
+            <div class="text-xs text-slate-400 font-semibold">04</div>
+            <div class="mt-1 font-semibold text-brand-blue">Prototype</div>
+            <svg class="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-slate-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </li>
+          <li class="reveal relative rounded-2xl border border-slate-100 bg-white p-5 shadow-soft">
+            <div class="text-xs text-slate-400 font-semibold">05</div>
+            <div class="mt-1 font-semibold text-brand-blue">Present</div>
+            <svg class="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-slate-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </li>
+          <li class="reveal relative rounded-2xl border-2 border-brand-orange bg-white p-5 shadow-soft">
+            <div class="text-xs text-brand-orange font-semibold">06</div>
+            <div class="mt-1 font-semibold text-brand-slate">Build Portfolio</div>
+          </li>
+        </ol>
+      </div>
+    </section>
+    <!-- ABOUT -->
+    <section class="py-20 md:py-28 bg-brand-gray">
+      <div class="max-w-3xl mx-auto px-5 md:px-8 text-center reveal">
+        <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">About Us</p>
+        <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">About hiMatrix Academy</h2>
+        <p class="mt-6 text-lg text-slate-600 leading-relaxed">
+          hiMatrix Academy equips aspiring designers, engineers, and innovators with practical skills in modern 3D product design. We believe learning should be hands-on, project-based, and focused on solving real-world problems.
+        </p>
+      </div>
+    </section>
+    <!-- TESTIMONIALS -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-6xl mx-auto px-5 md:px-8">
+        <div class="max-w-2xl reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">Voices</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Learners on the journey</h2>
+        </div>
+        <div class="mt-12 grid md:grid-cols-3 gap-5">
+          <figure class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <svg class="text-brand-orange" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 7H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2H4v2h1a4 4 0 0 0 4-4V7zm11 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2h-1v2h1a4 4 0 0 0 4-4V7z"/></svg>
+            <blockquote class="mt-4 text-slate-700 leading-relaxed">"I went from zero CAD experience to modelling a full product prototype in weeks. The project-based approach clicked instantly."</blockquote>
+            <figcaption class="mt-6 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-sm">LO</div>
+              <div><div class="font-semibold text-sm">Larry O.</div><div class="text-xs text-slate-500">Mechanical Engineering Student</div></div>
+            </figcaption>
+          </figure>
+          <figure class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <svg class="text-brand-orange" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 7H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2H4v2h1a4 4 0 0 0 4-4V7zm11 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2h-1v2h1a4 4 0 0 0 4-4V7z"/></svg>
+            <blockquote class="mt-4 text-slate-700 leading-relaxed">"The instructors don't just teach tools — they teach how to think like a product designer. My portfolio finally looks professional."</blockquote>
+            <figcaption class="mt-6 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-brand-orange text-white flex items-center justify-center font-bold text-sm">EB</div>
+              <div><div class="font-semibold text-sm">Ewoenam B.</div><div class="text-xs text-slate-500">Product Designer</div></div>
+            </figcaption>
+          </figure>
+          <figure class="card reveal bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <svg class="text-brand-orange" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 7H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2H4v2h1a4 4 0 0 0 4-4V7zm11 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 1-2 2h-1v2h1a4 4 0 0 0 4-4V7z"/></svg>
+            <blockquote class="mt-4 text-slate-700 leading-relaxed">"Onshape running in the browser meant I could learn from an old laptop. Practical, accessible, and genuinely inspiring."</blockquote>
+            <figcaption class="mt-6 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-brand-slate text-white flex items-center justify-center font-bold text-sm">BN</div>
+              <div><div class="font-semibold text-sm">Bruno N.</div><div class="text-xs text-slate-500">Entrepreneur</div></div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ -->
+    <section id="faq" class="py-20 md:py-28 bg-brand-gray">
+      <div class="max-w-3xl mx-auto px-5 md:px-8">
+        <div class="text-center reveal">
+          <p class="text-sm font-semibold text-brand-orange uppercase tracking-wider">FAQ</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Frequently asked questions</h2>
+        </div>
+        <div class="mt-10 space-y-3">
+          <details class="group bg-white rounded-2xl border border-slate-100 p-5">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Do I need prior CAD experience?</span>
+              <svg class="faq-chevron text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed">No prior experience needed. The course starts from fundamentals and progressively builds up to advanced product design.</p>
+          </details>
+          <details class="group bg-white rounded-2xl border border-slate-100 p-5">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Will I receive a certificate?</span>
+              <svg class="faq-chevron text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed">Yes. Every learner who completes the projects earns a hiMatrix Academy certificate of completion.</p>
+          </details>
+          <details class="group bg-white rounded-2xl border border-slate-100 p-5">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>Is the course online?</span>
+              <svg class="faq-chevron text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed">Yes - the course is delivered fully online with live sessions, project reviews and mentor support.</p>
+          </details>
+          <details class="group bg-white rounded-2xl border border-slate-100 p-5">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>What laptop do I need?</span>
+              <svg class="faq-chevron text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed">Onshape runs in your browser, so any laptop with a stable internet connection works - no expensive workstation required.</p>
+          </details>
+          <details class="group bg-white rounded-2xl border border-slate-100 p-5">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold list-none">
+              <span>How long is the course?</span>
+              <svg class="faq-chevron text-slate-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed">The course runs across several weeks of guided project work. Exact duration will be shared with registered candidates ahead of the intake.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- FINAL CTA -->
+    <section class="relative py-24 md:py-32 overflow-hidden bg-brand-blue text-white">
+      <div class="absolute inset-0 opacity-[0.15] pointer-events-none" aria-hidden="true" style="background-image: linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px); background-size: 44px 44px;"></div>
+      <div class="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-brand-orange/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="relative max-w-3xl mx-auto px-5 md:px-8 text-center reveal">
+        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
+          Ready to Start Designing Real Products?
+        </h2>
+        <p class="mt-6 text-lg text-white/80 max-w-xl mx-auto">
+          Register your interest today and be first in line when enrollment opens.
+        </p>
+        <a href="https://forms.gle/Q8jmgUMD4sH7TuWA8" target="_blank" rel="noopener"
+           class="btn mt-10 inline-flex items-center gap-2 bg-brand-orange text-white px-8 py-4 rounded-xl text-lg font-bold shadow-lift hover:bg-white hover:text-brand-blue">
+          Register Your Interest
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <p class="mt-6 text-sm text-white/60">Limited seats. Priority given to early registrations.</p>
+      </div>
+    </section>
+  </main>
+  <!-- FOOTER -->
+  <footer class="bg-brand-slate text-slate-300 py-14">
+    <div class="max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-3 gap-10">
+      <div>
+        <div class="flex items-center gap-2 font-bold text-lg text-white">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-white">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 549.53 650.71">
+                <defs>
+                  <style>
+                    .cls-1 {
+                      fill: #ff0000;
+                    }
+                  </style>
+                </defs>
+                <path class="cls-1" d="M439.49,389.24v261.47l110.04-63.76V158.65c0-8.05-1.08-15.84-3.1-23.24-9.34-34.24-38.82-60.16-74.93-64.25h-252.2v153.73c.02.7.06,1.39.1,2.08.04.63.09,1.25.16,1.87,2.8,27.86,26.83,48.78,54.83,48.78h66.41c52.03,3.14,92.7,38.09,98.7,87.25M329.32,178.62v-43.21h69.31c21.12,5.77,37.77,23.69,40.87,45.79h0v45.78h-109.06"/>
+                <path class="cls-1" d="M285.77,377.18l-66.37-.03v93.72h-64.18c-21.65,0-39.26-17.61-39.26-39.27V0L2.24,65.9l-1.84,1.07v420.62c-.27,2.85-.41,5.73-.41,8.58s.14,5.83.42,8.72c4.12,43.18,38.45,77.47,81.63,81.54h252.9s0-152.09,0-152.09c0-13.93-5.03-27.39-14.15-37.89-9.04-10.4-21.48-17.24-35.03-19.26Z"/>
+              </svg>
+          </span>
+          hiMatrix Academy
+        </div>
+        <p class="mt-4 text-sm text-slate-400 leading-relaxed max-w-xs">Teaching modern product design with Onshape.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold text-sm uppercase tracking-wider">Explore</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="#why" class="hover:text-white">Why hiMatrix</a></li>
+          <li><a href="#course" class="hover:text-white">Course</a></li>
+          <li><a href="#benefits" class="hover:text-white">Benefits</a></li>
+          <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold text-sm uppercase tracking-wider">Connect</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="https://www.instagram.com/himatrix_academy/" aria-label="Instagram" class="hover:text-white inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            Instagram
+          </a></li>
+          <li><a href="https://www.linkedin.com/company/himatrix-academy/" aria-label="LinkedIn" class="hover:text-white inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 1 1 4 0v4M12 13v4"/></svg>
+            LinkedIn
+          </a></li>
+          <li><a href="https://www.youtube.com/@hiMatrixAcademy" aria-label="LinkedIn" class="hover:text-white inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 12s0-3-0.8-4.5a2.8 2.8 0 0 0-2-2C17.7 5 12 5 12 5s-5.7 0-7.2.5a2.8 2.8 0 0 0-2 2C2 9 2 12 2 12s0 3 .8 4.5a2.8 2.8 0 0 0 2 2C6.3 19 12 19 12 19s5.7 0 7.2-.5a2.8 2.8 0 0 0 2-2C22 15 22 12 22 12z"/>
+              <path d="M10 9l5 3-5 3V9z"/>
+            </svg>
+            YouTube
+          </a></li>
+          <li><a href="https://facebook.com/profile.php?id=61591818170425" aria-label="Facebook" class="hover:text-white inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3z"/>
+            </svg>
+            Facebook
+          </a></li>
+          <li><a href="mailto:admin@himatrixglobal.com" class="hover:text-white inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email
+          </a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-5 md:px-8 mt-12 pt-6 border-t border-white/10 text-xs text-slate-500 flex flex-wrap justify-between gap-2">
+      <span>© <span id="year"></span> hiMatrix Academy. All rights reserved.</span>
+      <span>Built with care for engineers &amp; designers.</span>
+    </div>
+  </footer>
+  <script src="script.js" defer></script>
+</body>
+</html>
